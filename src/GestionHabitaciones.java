@@ -58,7 +58,7 @@ public class GestionHabitaciones {
                     for (int j = 0; j < hijos.getLength(); j++) {
                         Element eHijo = (Element) hijos.item(i);
                         if (eHijo.getTagName() == "codHotel") {
-                            out = eHijo.getNodeValue() + " - " + out;
+                            out = eHijo.getTextContent() + " - " + out;
                             System.out.println(out);
                         } else if (eHijo.getTagName() == "Estancias") {
                             NodeList nietos = eHijo.getChildNodes();
@@ -71,7 +71,7 @@ public class GestionHabitaciones {
                                     String eleccion = s.next();
                                     if (eleccion == "Y") {
                                         eNieto.setAttribute("pagado", "pagado");
-                                        log.log(Level.INFO, String.format("Realizado Pago: %s", eNieto.getTagName()));
+                                        log.log(Level.INFO, String.format("Realizado Pago: %s", eNieto.getTextContent()));
                                         System.out.print("Archivar (Y/N): ");
                                         eleccion = s.next();
                                         if (eleccion == "Y") {
@@ -79,13 +79,13 @@ public class GestionHabitaciones {
                                                 Element arc = document.createElement("Archivados");
                                                 arc.appendChild(eNieto);
                                                 eHijo.appendChild(arc);
-                                                log.log(Level.INFO, String.format("Archivado: %s", eNieto.getTagName()));
+                                                log.log(Level.INFO, String.format("Archivado: %s", eNieto.getTextContent()));
                                             } else {
                                                 for (int l = 0; l < nietos.getLength(); l++) {
                                                     Element o = (Element) nietos.item(l);
                                                     if (o.getTagName() == "Archivados") {
                                                         o.appendChild(eNieto);
-                                                        log.log(Level.INFO, String.format("Archivado: %s", eNieto.getTagName()));
+                                                        log.log(Level.INFO, String.format("Archivado: %s", eNieto.getTextContent()));
                                                     }
                                                 }
                                             }
