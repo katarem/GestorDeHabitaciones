@@ -28,6 +28,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class GestionHabitaciones {
+//Creamos el logger
     static Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     static{
         try {
@@ -43,7 +44,7 @@ public class GestionHabitaciones {
         Scanner s = new Scanner(System.in);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
-            //Lectura general
+//Lectura general
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(new File("./res/Habitaciones.xml"));
             NodeList listaHabitaciones = document.getElementsByTagName("Habitacion");
@@ -57,7 +58,7 @@ public class GestionHabitaciones {
                     for (int j = 0; j < hijos.getLength(); j++) {
                         Element eHijo = (Element) hijos.item(i);
                         if (eHijo.getTagName() == "codHotel") {
-                            out = eHijo.getNodeName() + " - " + out;
+                            out = eHijo.getNodeValue() + " - " + out;
                             System.out.println(out);
                         } else if (eHijo.getTagName() == "Estancias") {
                             NodeList nietos = eHijo.getChildNodes();
@@ -70,7 +71,7 @@ public class GestionHabitaciones {
                                     String eleccion = s.next();
                                     if (eleccion == "Y") {
                                         eNieto.setAttribute("pagado", "pagado");
-                                        log.log(Level.INFO, String.format("Realizado Pago: %s", eNieto.getNodeName()));
+                                        log.log(Level.INFO, String.format("Realizado Pago: %s", eNieto.getTagName()));
                                         System.out.print("Archivar (Y/N): ");
                                         eleccion = s.next();
                                         if (eleccion == "Y") {
@@ -78,13 +79,13 @@ public class GestionHabitaciones {
                                                 Element arc = document.createElement("Archivados");
                                                 arc.appendChild(eNieto);
                                                 eHijo.appendChild(arc);
-                                                log.log(Level.INFO, String.format("Archivado: %s", eNieto.getNodeName()));
+                                                log.log(Level.INFO, String.format("Archivado: %s", eNieto.getTagName()));
                                             } else {
                                                 for (int l = 0; l < nietos.getLength(); l++) {
                                                     Element o = (Element) nietos.item(l);
                                                     if (o.getTagName() == "Archivados") {
                                                         o.appendChild(eNieto);
-                                                        log.log(Level.INFO, String.format("Archivado: %s", eNieto.getNodeName()));
+                                                        log.log(Level.INFO, String.format("Archivado: %s", eNieto.getTagName()));
                                                     }
                                                 }
                                             }
@@ -98,7 +99,7 @@ public class GestionHabitaciones {
                 }
             }
             log.log(Level.INFO, "Actualización completada");
-// ACABA LECTURA DE XML
+// Acaba la lectura del xml
 
 //Creamos el nuevo xml
             TransformerFactory xformFactory = TransformerFactory.newInstance();
